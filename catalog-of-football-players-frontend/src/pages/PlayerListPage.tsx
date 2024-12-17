@@ -1,8 +1,8 @@
-// src/pages/PlayerListPage.tsx
+// PlayerListPage.tsx
 import React, { useEffect, useState } from 'react';
 import { Client, FootballPlayer } from '../api/api';
 import { useNavigate } from 'react-router-dom';
-
+import { usePlayerContext } from '../context/PlayerContext';
 
 const apiClient = new Client('https://localhost:44307');
 
@@ -11,12 +11,20 @@ const PlayerListPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { setPlayerDictionary } = usePlayerContext(); // Получите функцию для обновления playerDictionary
 
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
         const response = await apiClient.footballPlayerAll();
         setPlayers(response);
+
+        // Обновляем playerDictionary в контексте
+        const playerDict = response.reduce((acc: { [key: string]: FootballPlayer }, player) => {
+          acc[player.id as string] = player;
+          return acc;
+        }, {});
+        setPlayerDictionary(playerDict);
       } catch (err) {
         setError('Не удалось загрузить список игроков');
       } finally {
@@ -25,7 +33,7 @@ const PlayerListPage: React.FC = () => {
     };
 
     fetchPlayers();
-  }, []);
+  }, [setPlayerDictionary]);
 
   if (loading) {
     return <p>Загрузка...</p>;
@@ -36,11 +44,29 @@ const PlayerListPage: React.FC = () => {
   }
 
   const handleEditPlayer = (playerId: string | undefined) => {
-    navigate(`/update/${playerId}`);
+    if (playerId) {
+      navigate(`/update/${playerId}`);
+    }
   };
 
-  const handleDeletePlayer = (playerId: string | undefined) => {
-    apiClient.footballPlayerDELETE(playerId as string);
+  const handleDeletePlayer = async (playerId: string | undefined) => {
+    if (playerId) {
+      try {
+        await apiClient.footballPlayerDELETE(playerId);
+        const updatedPlayers = await apiClient.footballPlayerAll();
+        setPlayers(updatedPlayers);
+        
+        // Обновляем playerDictionary после удаления игрока
+        const playerDict = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
+          acc[player.id as string] = player;
+          return acc;
+        }, {});
+        setPlayerDictionary(playerDict);
+      } catch (err) {
+        console.error("Error deleting player:", err);
+        setError('Не удалось удалить игрока');
+      }
+    }
   };
 
   return (
@@ -76,3 +102,4 @@ const PlayerListPage: React.FC = () => {
 };
 
 export default PlayerListPage;
+

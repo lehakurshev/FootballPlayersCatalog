@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f034dd98-c185-4f48-866a-33cef45a8559" name="Changes" comment="" />
+    <list default="true" id="f034dd98-c185-4f48-866a-33cef45a8559" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,7 +121,7 @@
       <workItem from="1734420395405" duration="7396000" />
       <workItem from="1734438250537" duration="658000" />
       <workItem from="1734442952214" duration="2963000" />
-      <workItem from="1734450562141" duration="1920000" />
+      <workItem from="1734450562141" duration="3120000" />
     </task>
     <servers />
   </component>
