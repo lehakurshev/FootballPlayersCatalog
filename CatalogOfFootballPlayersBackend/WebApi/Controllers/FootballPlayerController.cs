@@ -14,10 +14,11 @@ namespace WebApi.Controllers;
 public class FootballPlayerController : BaseController
 {
     [HttpGet]
-    public async Task<ActionResult<List<FootballPlayer>>> GetAll()
+    public async Task<ActionResult<IList<FootballPlayer>>> GetAll()
     {
-        var query = new GetFootballPlayersListQuery();
-        return Ok(query);
+        var query = new GetFootballPlayersListQuery{};
+        var vm = await Mediator.Send(query);
+        return Ok(vm);
     }
 
     [HttpPost]
