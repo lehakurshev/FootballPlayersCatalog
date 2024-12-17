@@ -12,7 +12,6 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [playerDictionary, setPlayerDictionary] = useState<{ [key: string]: FootballPlayer }>({});
 
   useEffect(() => {
-    // Load from localStorage on mount
     const storedPlayers = localStorage.getItem('playerDictionary');
     if (storedPlayers) {
       try {
@@ -24,7 +23,6 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   }, []);
 
   useEffect(() => {
-    // Save to localStorage on change
     localStorage.setItem('playerDictionary', JSON.stringify(playerDictionary));
   }, [playerDictionary]);
 

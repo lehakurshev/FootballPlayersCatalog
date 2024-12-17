@@ -3,16 +3,16 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import AddPlayer from './components/AddPlayer';
 import PlayerListPage from './pages/PlayerListPage';
 import UpdatePlayer from './components/UpdatePlayer';
-import { PlayerProvider } from './context/PlayerContext'; // Импортируйте ваш контекст
+import { PlayerProvider } from './context/PlayerContext';
 
 const App: React.FC = () => {
   return (
-    <PlayerProvider> {/* Оборачиваем все в PlayerProvider */}
+    <PlayerProvider>
       <Router>
         <div>
           <nav>
             <Link to="/add">Добавить игрока</Link>
-            <td></td>
+            <br />
             <Link to="/players">Список игроков</Link>
           </nav>
           <Routes>

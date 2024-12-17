@@ -142,6 +142,45 @@ export class Client extends ClientBase {
     /**
      * @return OK
      */
+    footballPlayerGET(id: string): Promise<FootballPlayer> {
+        let url_ = this.baseUrl + "/api/FootballPlayer/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.http.fetch(url_, options_).then((_response: Response) => {
+            return this.processFootballPlayerGET(_response);
+        });
+    }
+
+    protected processFootballPlayerGET(response: Response): Promise<FootballPlayer> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as FootballPlayer;
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<FootballPlayer>(null as any);
+    }
+
+    /**
+     * @return OK
+     */
     footballPlayerDELETE(id: string): Promise<void> {
         let url_ = this.baseUrl + "/api/FootballPlayer/{id}";
         if (id === undefined || id === null)

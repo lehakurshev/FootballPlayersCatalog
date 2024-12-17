@@ -1,8 +1,7 @@
-// src/components/AddPlayer.tsx
-
 import React, { useState } from 'react';
 import { Client, AddFootballPlayerDto } from '../api/api';
 import { useNavigate } from 'react-router-dom';
+
 
 const countries = ['Россия', 'США', 'Италия'];
 
@@ -12,8 +11,8 @@ const AddPlayer: React.FC = () => {
   const [paul, setGender] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [teamName, setTeamName] = useState('');
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
-  const [error, setError] = useState<string | null>(null); // Add error state
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [country, setCountry] = useState(countries[0]);
   const navigate = useNavigate();
 

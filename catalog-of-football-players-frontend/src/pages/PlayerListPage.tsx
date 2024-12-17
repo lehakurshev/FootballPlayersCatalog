@@ -11,7 +11,7 @@ const PlayerListPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { setPlayerDictionary } = usePlayerContext(); // Получите функцию для обновления playerDictionary
+  const { setPlayerDictionary } = usePlayerContext();
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -19,7 +19,6 @@ const PlayerListPage: React.FC = () => {
         const response = await apiClient.footballPlayerAll();
         setPlayers(response);
 
-        // Обновляем playerDictionary в контексте
         const playerDict = response.reduce((acc: { [key: string]: FootballPlayer }, player) => {
           acc[player.id as string] = player;
           return acc;
@@ -56,7 +55,6 @@ const PlayerListPage: React.FC = () => {
         const updatedPlayers = await apiClient.footballPlayerAll();
         setPlayers(updatedPlayers);
         
-        // Обновляем playerDictionary после удаления игрока
         const playerDict = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
           acc[player.id as string] = player;
           return acc;

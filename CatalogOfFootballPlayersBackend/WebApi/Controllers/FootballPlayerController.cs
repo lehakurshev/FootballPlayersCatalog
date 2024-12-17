@@ -1,6 +1,7 @@
 using Application.FootballPlayers.Commands.AddFootballPlayer;
 using Application.FootballPlayers.Commands.DeleteFootballPlayer;
 using Application.FootballPlayers.Commands.UpdateFootballPlayer;
+using Application.FootballPlayers.Queries.GetFootballPlayer;
 using Application.FootballPlayers.Queries.GetFootballPlayersList;
 using AutoMapper;
 using Domain;
@@ -17,6 +18,17 @@ public class FootballPlayerController : BaseController
     public async Task<ActionResult<IList<FootballPlayer>>> GetAll()
     {
         var query = new GetFootballPlayersListQuery{};
+        var vm = await Mediator.Send(query);
+        return Ok(vm);
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<FootballPlayer>> Get(Guid id)
+    {
+        var query = new GetFootballPlayerQuery
+        {
+            Id = id,
+        };
         var vm = await Mediator.Send(query);
         return Ok(vm);
     }

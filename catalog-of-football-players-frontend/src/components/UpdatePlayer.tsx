@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
 import { Client, UpdateFootballPlayerDto, FootballPlayer } from '../api/api';
 import { usePlayerContext } from '../context/PlayerContext';
@@ -15,10 +15,11 @@ const EditPlayer: React.FC = () => {
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [teamName, setTeamName] = useState('');
     const [country, setCountry] = useState('');
-    const [isLoading, setIsLoading] = useState(false); // Initially not loading
+    const [isLoading, setIsLoading] = useState(false); 
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const apiClient = new Client('https://localhost:44307');
+    const isDataLoaded = useRef(false);
 
     useEffect(() => {
         const loadPlayerData = async () => {
@@ -30,7 +31,17 @@ const EditPlayer: React.FC = () => {
                 setTeamName(playerDictionary[id].teamName as string);
                 setCountry(playerDictionary[id].country as string);
             } else {
-                setError('Player not found or context not ready.');
+                if (!isDataLoaded.current && id) {
+                    isDataLoaded.current = true;
+                    const player = (await apiClient.footballPlayerGET(id as string));
+                    setFirstName(player.firstName as string);
+                    setLastName(player.lastName as string);
+                    setGender(player.paul as string);
+                    setDateOfBirth(player.dateOfBirth?.toString().slice(0, 10) || '');
+                    setTeamName(player.teamName as string);
+                    setCountry(player.country as string);
+                    console.log(player);
+                }
             }
             setIsLoading(false);
         };
@@ -43,29 +54,28 @@ const EditPlayer: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-        setError(null); // Clear any previous errors
+        setError(null);
 
         const player: UpdateFootballPlayerDto = {
-            id: id as string, // Ensure id is a string
+            id: id as string,
             firstName,
             lastName,
             paul,
-            dateOfBirth: new Date(dateOfBirth), // Handle empty dateOfBirth
+            dateOfBirth: new Date(dateOfBirth),
             teamName,
             country
         };
 
         try {
             await apiClient.footballPlayerPUT(player);
-            // Update the playerDictionary in context after successful update.
-            const updatedPlayers = await apiClient.footballPlayerAll(); //refetch all players
+            const updatedPlayers = await apiClient.footballPlayerAll();
             const newPlayerDictionary = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
-              acc[player.id as string] = player;
-              return acc;
+                acc[player.id as string] = player;
+                return acc;
             }, {});
             setPlayerDictionary(newPlayerDictionary);
 
-            navigate('/players', { replace: true }); // Navigate after successful update
+            navigate('/players', { replace: true });
         } catch (err: any) {
             setError(err.message || 'An error occurred while updating the player.');
         } finally {
