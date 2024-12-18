@@ -1,0 +1,44 @@
+version: '0.1'
+
+services:
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"  # Порт для доступа к базе данных
+    environment:
+      POSTGRES_DB: footballplayersdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data  
+    networks:
+      - backend
+    restart: unless-stopped
+
+  dotnet-app:
+    image: backend
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=footballplayersdb;Username=postgres;Password=postgres"
+    networks:
+      - backend
+    depends_on:
+      - postgres
+
+  tsx-app:
+    image: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+    depends_on:
+      - dotnet-app
+
+volumes:
+  postgres: { }
+
+networks:
+  backend:
+    driver: bridge
