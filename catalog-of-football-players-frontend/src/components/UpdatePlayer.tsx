@@ -18,7 +18,7 @@ const EditPlayer: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false); 
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const apiClient = new Client('https://localhost:44307');
+    const apiClient = new Client('http://localhost:8080');
     const isDataLoaded = useRef(false);
 
     useEffect(() => {

@@ -4,7 +4,7 @@ import { Client, FootballPlayer } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerContext } from '../context/PlayerContext';
 
-const apiClient = new Client('https://localhost:44307');
+const apiClient = new Client('http://localhost:8080');
 
 const PlayerListPage: React.FC = () => {
   const [players, setPlayers] = useState<FootballPlayer[]>([]);
