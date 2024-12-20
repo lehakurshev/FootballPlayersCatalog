@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Client, FootballPlayer } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerContext } from '../context/PlayerContext';
+import './PlayerListPage.css'
 
 const apiClient = new Client('http://localhost:8080');
 
