@@ -15,7 +15,16 @@ public sealed class FootballPlayerDbContext : DbContext, IFootballPlayerDbContex
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql("Host=postgres;Port=5432;Database=footballplayersdb;Username=postgres;Password=postgres");
+        //optionsBuilder.UseNpgsql("Host=postgres;Port=5432;Database=footballplayersdb;Username=postgres;Password=postgres");
+        
+        var host       = "rc1a-d12zl0ys84ef6bd6.mdb.yandexcloud.net";
+        var port       = "6432";
+        var db         = "db1";
+        var username   = "user1";
+        var password   = "nfyrb2017";
+        var connString = $"Host={host};Port={port};Database={db};Username={username};Password={password}";
+
+        optionsBuilder.UseNpgsql(connString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

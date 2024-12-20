@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
 namespace WebApi.Controllers;
-
-[Route("api/[controller]")]
+[ApiVersion("2.0")]
+[Route("api/{version:apiVersion}/[controller]")]
 public class FootballPlayerController : BaseController
 {
     [HttpGet]
