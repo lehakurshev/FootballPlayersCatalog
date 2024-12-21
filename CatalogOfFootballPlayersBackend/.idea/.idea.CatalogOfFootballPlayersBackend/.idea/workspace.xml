@@ -10,11 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f034dd98-c185-4f48-866a-33cef45a8559" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/AddPlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/AddPlayer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/pages/PlayerListPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/pages/PlayerListPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +126,7 @@
       <workItem from="1734539583707" duration="4384000" />
       <workItem from="1734772269987" duration="7139000" />
       <workItem from="1734786589998" duration="7843000" />
+      <workItem from="1734798634215" duration="608000" />
     </task>
     <servers />
   </component>

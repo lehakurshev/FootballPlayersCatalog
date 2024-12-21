@@ -4,6 +4,7 @@ import { Client, UpdateFootballPlayerDto, FootballPlayer } from '../api/api';
 import { usePlayerContext } from '../context/PlayerContext';
 import { useNavigate } from 'react-router-dom';
 import { BACK_ADDRESS } from '../config';
+import { updatePlayer } from '../api/FootballPlayerHub';
 
 const countries = ['Россия', 'США', 'Италия'];
 
@@ -90,7 +91,16 @@ const EditPlayer: React.FC = () => {
                 return acc;
             }, {});
             setPlayerDictionary(newPlayerDictionary);
-
+            const playerToAdd: FootballPlayer = {
+                    id,
+                    firstName,
+                    lastName,
+                    paul: paul,
+                    dateOfBirth: new Date(dateOfBirth),
+                    teamName,
+                    country
+                    };
+                    updatePlayer(playerToAdd);
             navigate('/players', { replace: true });
         } catch (err: any) {
             setError(err.message || 'An error occurred while updating the player.');

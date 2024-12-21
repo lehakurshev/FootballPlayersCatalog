@@ -17,6 +17,14 @@ export async function addPlayer(player: FootballPlayer): Promise<void> {
     }
 }
 
+export async function updatePlayer(player: FootballPlayer): Promise<void> {
+    try {
+        await connection.invoke('UpdatePlayer', player);
+    } catch (error) {
+        console.error('Ошибка при добавлении игрока:', error);
+    }
+}
+
 
 // Метод для удаления игрока
 export async function deletePlayer(playerId: string): Promise<void> {

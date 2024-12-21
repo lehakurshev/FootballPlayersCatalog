@@ -11,8 +11,13 @@ public class FootballPlayerHub : Hub
         return Clients.All.SendAsync("AddPlayer", player);
     }
     
+    public Task UpdatePlayer(FootballPlayer player)
+    {
+        return Clients.All.SendAsync("UpdatePlayer", player);
+    }
+    
     public Task DeletePlayer(Guid playerId)
     {
-        return Clients.All.SendAsync(nameof(DeletePlayer), playerId);
+        return Clients.All.SendAsync("DeletePlayer", playerId);
     }
 }
