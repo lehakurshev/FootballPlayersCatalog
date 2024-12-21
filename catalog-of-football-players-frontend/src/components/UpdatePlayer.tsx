@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Client, UpdateFootballPlayerDto, FootballPlayer } from '../api/api';
 import { usePlayerContext } from '../context/PlayerContext';
 import { useNavigate } from 'react-router-dom';
+import { BACK_ADDRESS } from '../config';
 
 const countries = ['Россия', 'США', 'Италия'];
 
@@ -23,7 +24,7 @@ const EditPlayer: React.FC = () => {
     const [dateOfBirthError, setDateOfBirthError] = useState(false);
     const [teamNameError, setTeamNameError] = useState(false);
     const navigate = useNavigate();
-    const apiClient = new Client('http://localhost:8080');
+    const apiClient = new Client(BACK_ADDRESS);
     const isDataLoaded = useRef(false);
 
     useEffect(() => {

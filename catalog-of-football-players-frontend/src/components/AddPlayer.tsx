@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Client, AddFootballPlayerDto } from '../api/api';
+import { Client, AddFootballPlayerDto, FootballPlayer } from '../api/api';
 import { useNavigate } from 'react-router-dom';
+import { addPlayer } from '../api/FootballPlayerHub';
+import { BACK_ADDRESS } from '../config';
 import './CommandPlayer.css';
 
 
@@ -22,7 +24,7 @@ const AddPlayer: React.FC = () => {
   const [teamNameError, setTeamNameError] = useState(false);
   const navigate = useNavigate();
 
-  const apiClient = new Client('http://localhost:8080');
+  const apiClient = new Client(BACK_ADDRESS);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,7 +50,17 @@ const AddPlayer: React.FC = () => {
       country
     };
     try {
-      await apiClient.footballPlayerPOST(player);
+      const id = await apiClient.footballPlayerPOST(player);
+      const playerToAdd: FootballPlayer = {
+        id,
+        firstName,
+        lastName,
+        paul: gender,
+        dateOfBirth: new Date(dateOfBirth),
+        teamName,
+        country
+        };
+      addPlayer(playerToAdd);
       navigate('/players', { replace: true });
     } catch (error: any) {
       setError(error.message || 'Failed to add player.');

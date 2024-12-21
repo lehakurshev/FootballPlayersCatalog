@@ -10,7 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f034dd98-c185-4f48-866a-33cef45a8559" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/AddPlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/AddPlayer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/pages/PlayerListPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/pages/PlayerListPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +127,8 @@
       <workItem from="1734442952214" duration="2963000" />
       <workItem from="1734450562141" duration="5270000" />
       <workItem from="1734539583707" duration="4384000" />
+      <workItem from="1734772269987" duration="7139000" />
+      <workItem from="1734786589998" duration="7843000" />
     </task>
     <servers />
   </component>
@@ -136,32 +142,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/WebApi/Controllers/FootballPlayerController.cs</url>
-          <line>37</line>
-          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\WebApi\Controllers\FootballPlayerController.cs" containingFunctionPresentation="Method 'Create'">
-            <startOffsets>
-              <option value="1147" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1148" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/WebApi/Controllers/FootballPlayerController.cs</url>
-          <line>18</line>
-          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\WebApi\Controllers\FootballPlayerController.cs" containingFunctionPresentation="Method 'GetAll'">
-            <startOffsets>
-              <option value="649" />
-            </startOffsets>
-            <endOffsets>
-              <option value="650" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Application/FootballPlayers/Queries/GetFootballPlayersList/GetFootballPlayersListQueryHandler.cs</url>
           <line>17</line>

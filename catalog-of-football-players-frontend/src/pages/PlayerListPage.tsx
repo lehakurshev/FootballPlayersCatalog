@@ -3,16 +3,32 @@ import React, { useEffect, useState } from 'react';
 import { Client, FootballPlayer } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerContext } from '../context/PlayerContext';
+import { BACK_ADDRESS } from '../config';
+import { connection, startConnection } from '../api/FootballPlayerHub';
 import './PlayerListPage.css'
 
-const apiClient = new Client('http://localhost:8080');
+const apiClient = new Client(BACK_ADDRESS);
 
 const PlayerListPage: React.FC = () => {
   const [players, setPlayers] = useState<FootballPlayer[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const { setPlayerDictionary } = usePlayerContext();
+  const { playerDictionary, setPlayerDictionary } = usePlayerContext();
+
+  startConnection()
+
+  useEffect(() => {
+    const createHubConnection = async () => {
+      connection.on('AddPlayer', (player: FootballPlayer) => {
+        setPlayers([...players, player]); // Add new player to the state
+        const playerDict = { ...playerDictionary, [player.id as string]: player }; // Add player to dictionary
+        setPlayerDictionary(playerDict);
+      });
+    };
+
+    createHubConnection();
+  }, [players, setPlayerDictionary, playerDictionary]);
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -55,7 +71,7 @@ const PlayerListPage: React.FC = () => {
         await apiClient.footballPlayerDELETE(playerId);
         const updatedPlayers = await apiClient.footballPlayerAll();
         setPlayers(updatedPlayers);
-        
+
         const playerDict = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
           acc[player.id as string] = player;
           return acc;
