@@ -13,6 +13,7 @@ public class FootballPlayerHub : Hub
     
     public Task UpdatePlayer(FootballPlayer player)
     {
+        player.EditDate = DateTime.UtcNow;
         return Clients.All.SendAsync("UpdatePlayer", player);
     }
     
