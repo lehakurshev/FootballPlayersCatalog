@@ -1,13 +1,16 @@
 FROM postgres:16
 
+ENV POSTGRES_DB=footballplayersdb
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=postgres
 
-ENV POSTGRES_DB footballplayersdb
-ENV POSTGRES_USER postgres
-ENV POSTGRES_PASSWORD postgres
+# Изменяем порт, который слушает PostgreSQL
+ENV PGPORT=443
 
-EXPOSE 5432
+EXPOSE 443
 
-CMD ["postgres"]
+# Меняем команду для запуска postgres, добавляя -p 443 для порта
+CMD ["postgres", "-p", "443"]
 
 # docker build -t postgres-image .
 
