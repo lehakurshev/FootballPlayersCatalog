@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Client, UpdateFootballPlayerDto, FootballPlayer } from '../api/api';
 import { usePlayerContext } from '../context/PlayerContext';
 import { useNavigate } from 'react-router-dom';
+import { BACK_ADDRESS } from '../config';
+import { updatePlayer } from '../api/FootballPlayerHub';
 
 const countries = ['Россия', 'США', 'Италия'];
 
@@ -15,10 +17,15 @@ const EditPlayer: React.FC = () => {
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [teamName, setTeamName] = useState('');
     const [country, setCountry] = useState('');
-    const [isLoading, setIsLoading] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [firstNameError, setFirstNameError] = useState(false);
+    const [lastNameError, setLastNameError] = useState(false);
+    const [genderError, setGenderError] = useState(false);
+    const [dateOfBirthError, setDateOfBirthError] = useState(false);
+    const [teamNameError, setTeamNameError] = useState(false);
     const navigate = useNavigate();
-    const apiClient = new Client('http://localhost:8080');
+    const apiClient = new Client(BACK_ADDRESS);
     const isDataLoaded = useRef(false);
 
     useEffect(() => {
@@ -53,6 +60,16 @@ const EditPlayer: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Validation
+        setFirstNameError(!firstName);
+        setLastNameError(!lastName);
+        setGenderError(!paul);
+        setDateOfBirthError(!dateOfBirth);
+        setTeamNameError(!teamName);
+
+        if (!firstName || !lastName || !paul || !dateOfBirth || !teamName) {
+            return;
+        }
         setIsLoading(true);
         setError(null);
 
@@ -74,7 +91,16 @@ const EditPlayer: React.FC = () => {
                 return acc;
             }, {});
             setPlayerDictionary(newPlayerDictionary);
-
+            const playerToAdd: FootballPlayer = {
+                    id,
+                    firstName,
+                    lastName,
+                    paul: paul,
+                    dateOfBirth: new Date(dateOfBirth),
+                    teamName,
+                    country
+                    };
+                    updatePlayer(playerToAdd);
             navigate('/players', { replace: true });
         } catch (err: any) {
             setError(err.message || 'An error occurred while updating the player.');
@@ -94,44 +120,75 @@ const EditPlayer: React.FC = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            {firstNameError && <span className="error-message">Поле обязательно для заполнения</span>}
             <input
                 type="text"
                 placeholder="Имя"
+                id="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
+                onBlur={() => setFirstNameError(!firstName)}
+                className={firstNameError ? 'error' : ''}
             />
+
+
+            {lastNameError && <span className="error-message">Поле обязательно для заполнения</span>}
             <input
                 type="text"
                 placeholder="Фамилия"
+                id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+                onBlur={() => setLastNameError(!lastName)}
+                className={lastNameError ? 'error' : ''}
             />
-            <select value={paul} onChange={(e) => setGender(e.target.value)}>
+
+            {genderError && <span className="error-message">Поле обязательно для заполнения</span>}
+            <select
+                id="gender"
+                value={paul}
+                onChange={(e) => setGender(e.target.value)}
+                onBlur={() => setGenderError(!paul)}
+                className={genderError ? 'error' : ''}
+            >
                 <option value="">Выберите пол</option>
                 <option value="male">Мужской</option>
                 <option value="female">Женский</option>
             </select>
+            {dateOfBirthError && <span className="error-message">Поле обязательно для заполнения</span>}
             <input
                 type="date"
+                id="dateOfBirth"
                 value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
+                onBlur={() => setDateOfBirthError(!dateOfBirth)}
+                className={dateOfBirthError ? 'error' : ''}
             />
+            {teamNameError && <span className="error-message">Поле обязательно для заполнения</span>}
             <input
                 type="text"
                 placeholder="Название команды"
+                id="teamName"
                 value={teamName}
                 onChange={(e) => setTeamName(e.target.value)}
+                onBlur={() => setTeamNameError(!teamName)}
+                className={teamNameError ? 'error' : ''}
             />
-            <select value={country} onChange={(e) => setCountry(e.target.value)}>
+
+
+
+            <select id="country" value={country} onChange={(e) => setCountry(e.target.value)}>
                 {countries.map((country) => (
                     <option key={country} value={country}>
                         {country}
                     </option>
                 ))}
             </select>
+
             <button type="submit" disabled={isLoading}>
-                {isLoading ? 'Updating...' : 'Update Player'}
+                {isLoading ? 'Adding...' : 'Add Player'}
             </button>
+            {error && <p className="error-message">{error}</p>}
         </form>
     );
 };

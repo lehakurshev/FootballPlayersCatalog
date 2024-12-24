@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
 using Persistence;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApi.Hubs;
 
 namespace WebApi;
 
@@ -24,13 +25,13 @@ public class Startup
         // политику надо будет поменять
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAll", policy =>
-            {
-                policy.AllowAnyOrigin();
-                policy.AllowAnyHeader();
-                policy.AllowAnyMethod();
-            });
+            options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .SetIsOriginAllowed((host) => true));
         });
+        services.AddSignalR();
 
         
         services.AddVersionedApiExplorer(options =>
@@ -61,11 +62,13 @@ public class Startup
         });
         app.UseRouting();
         app.UseHttpsRedirection();
-        app.UseCors("AllowAll");
+        app.UseWebSockets();
+        app.UseCors("AllowSpecificOrigin");
         app.UseApiVersioning();
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+            endpoints.MapHub<FootballPlayerHub>("/players");
         });
     }
 }

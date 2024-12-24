@@ -4,6 +4,7 @@ import AddPlayer from './components/AddPlayer';
 import PlayerListPage from './pages/PlayerListPage';
 import UpdatePlayer from './components/UpdatePlayer';
 import { PlayerProvider } from './context/PlayerContext';
+import './App.css'
 
 const App: React.FC = () => {
   return (

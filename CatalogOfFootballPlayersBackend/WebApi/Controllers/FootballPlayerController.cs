@@ -11,7 +11,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers;
 [ApiVersion("2.0")]
-[Route("api/{version:apiVersion}/[controller]")]
+[Route("api/[controller]")]
 public class FootballPlayerController : BaseController
 {
     [HttpGet]
