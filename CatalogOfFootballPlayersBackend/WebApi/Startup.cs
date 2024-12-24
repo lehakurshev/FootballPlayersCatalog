@@ -1,8 +1,6 @@
 using Application;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Persistence;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using WebApi.Hubs;
 
 namespace WebApi;
@@ -22,7 +20,6 @@ public class Startup
         services.AddPersistence(Configuration);
         services.AddControllers();
         
-        // политику надо будет поменять
         services.AddCors(options =>
         {
             options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("http://localhost:3000")
@@ -32,39 +29,44 @@ public class Startup
                 .SetIsOriginAllowed((host) => true));
         });
         services.AddSignalR();
-
         
-        services.AddVersionedApiExplorer(options =>
-            options.GroupNameFormat = "'v'VVV");
-        services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
-            ConfigureSwaggerOptions>();
-        services.AddSwaggerGen();
-        services.AddApiVersioning();
+
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v2", new OpenApiInfo { Title = "My API", Version = "v2" });
+            // Если у вас есть другие версии, добавьте их здесь
+        });
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
-        IApiVersionDescriptionProvider provider)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
-        app.UseSwagger();
-        app.UseSwaggerUI(config =>
+        
+        app.Use(async (context, next) =>
         {
-            foreach (var description in provider.ApiVersionDescriptions)
+            if (context.Request.Path == "/")
             {
-                config.SwaggerEndpoint(
-                    $"/swagger/{description.GroupName}/swagger.json",
-                    description.GroupName.ToUpperInvariant());
-                config.RoutePrefix = string.Empty;
+                context.Response.Redirect("/swagger/index.html");
+                return;
             }
+            await next();
         });
+        
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v2/swagger.json", "My API V2");
+            c.RoutePrefix = string.Empty; 
+        });
+        
         app.UseRouting();
         app.UseHttpsRedirection();
         app.UseWebSockets();
         app.UseCors("AllowSpecificOrigin");
-        app.UseApiVersioning();
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();

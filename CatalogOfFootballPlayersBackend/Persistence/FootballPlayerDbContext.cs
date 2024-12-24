@@ -17,7 +17,7 @@ public sealed class FootballPlayerDbContext : DbContext, IFootballPlayerDbContex
     {
         //optionsBuilder.UseNpgsql("Host=postgres;Port=5432;Database=footballplayersdb;Username=postgres;Password=postgres");
         
-        var host       = "rc1a-d12zl0ys84ef6bd6.mdb.yandexcloud.net";
+        var host       = "rc1a-jas70kcwsjehwgdf.mdb.yandexcloud.net";
         var port       = "6432";
         var db         = "db1";
         var username   = "user1";
