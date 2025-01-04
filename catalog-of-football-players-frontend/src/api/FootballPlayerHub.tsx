@@ -5,8 +5,14 @@ import { BACK_ADDRESS, USE_SIGNALR } from '../config';
 
 // Создание соединения с хабом
 export const connection: HubConnection = new HubConnectionBuilder()
-    .withUrl(`${BACK_ADDRESS}/players`) // укажите правильный URL хаба
+    .withUrl(`${BACK_ADDRESS}/players`, {
+        transport: 1,
+        skipNegotiation: true,
+        withCredentials: true,
+    })
+    .withAutomaticReconnect()
     .build();
+
 
 // Метод для добавления игрока
 export async function addPlayer(player: FootballPlayer): Promise<void> {
@@ -40,16 +46,17 @@ export async function deletePlayer(playerId: string): Promise<void> {
     }
 }
 
-export async function startConnection(): Promise<void> {
+async function startConnection(): Promise<void> {
     try {
         if (USE_SIGNALR === 'true') {
             await connection.start();
             console.log('Соединение с хабом установлено.');
         }
     } catch (error) {
-        console.error('Ошибка при установлении соединения с хабом:', error);
+        console.log('Ошибка при установлении соединения с хабом:', error);
     }
 }
+
 
 if (USE_SIGNALR === 'true') {
     startConnection();

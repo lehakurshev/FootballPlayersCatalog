@@ -22,8 +22,10 @@ public class Startup
         
         services.AddCors(options =>
         {
+
             options.AddPolicy("AllowSpecificOrigin", builder => 
                 builder.WithOrigins(EnvironmentaVariables.FRONTEND_HOST ?? "http://localhost:8080", "http://localhost:3000")
+
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
@@ -31,7 +33,6 @@ public class Startup
         });
         services.AddSignalR();
         
-
 
         services.AddSwaggerGen(c =>
         {
@@ -46,12 +47,18 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+        
         app.UseSwagger();
-        app.UseSwaggerUI();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint($"/swagger/-/swagger.json", "-");
+            c.RoutePrefix = string.Empty; 
+        });
+        
         app.UseRouting();
         app.UseHttpsRedirection();
-        app.UseWebSockets();
         app.UseCors("AllowSpecificOrigin");
+        app.UseWebSockets();
 
         app.UseEndpoints(endpoints =>
         {

@@ -4,7 +4,7 @@ import { Client, FootballPlayer } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerContext } from '../context/PlayerContext';
 import { BACK_ADDRESS } from '../config';
-import { connection, startConnection } from '../api/FootballPlayerHub';
+import { connection } from '../api/FootballPlayerHub';
 import { deletePlayer } from '../api/FootballPlayerHub';
 import './PlayerListPage.css'
 
@@ -17,11 +17,6 @@ const PlayerListPage: React.FC = () => {
   const [deletingPlayerId, setDeletingPlayerId] = useState<string | null>(null);
   const navigate = useNavigate();
   const { playerDictionary, setPlayerDictionary } = usePlayerContext();
-
-
-  useEffect(() => {
-    startConnection();
-  }, []);
 
 
   useEffect(() => {
@@ -52,6 +47,7 @@ const PlayerListPage: React.FC = () => {
      };
     createHubConnection();
   }, [connection]);
+
 
   useEffect(() => {
     const fetchPlayers = async () => {

@@ -12,7 +12,7 @@ const App: React.FC = () => {
       <Router>
         <div>
           <nav>
-            <Link to="/add">Добавить игрока</Link>
+            <Link to="/add">Добавить игрока!!!</Link>
             <br />
             <Link to="/players">Список игроков</Link>
           </nav>

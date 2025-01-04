@@ -24,23 +24,30 @@ services:
     ports:
       - "8080:8080"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      - API_VERSION=v3
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=footballplayersdb
+      - FRONTEND_HOST=http://localhost:3000
+      - PORT=8080
     networks:
       - backend
     depends_on:
       - postgres
 
   tsx-app:
-
     build: 
       context: ./catalog-of-football-players-frontend
       args:
         REACT_APP_BACK_ADDRESS: http://localhost:8080
         REACT_APP_USE_SIGNALR: true
         PORT: 3000
-
     ports:
       - "3000:3000"
+    environment:
+      - PORT=3000
     networks:
       - backend
     depends_on:
