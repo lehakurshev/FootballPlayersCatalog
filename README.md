@@ -83,8 +83,8 @@
 ### 3. Скрипты для деплоя
 
 - в папке YandexCloudDeployment лежат скрипты для деплоя
-   перед запуском скриптов нужно выполнить `yc init` или ./init.sh
-   ./backend.sh - билдит образ и пушит в Container Registry - Ревизиии для контейнеров backend-1 backend-2 нужно делать самостоятельно через Консоль управления (CLI не позволяет работать с переменными окружения и секретами)
-   ./frontend.sh - аналогично билдит образ и пушит в Container Registry
-   ./nginx-balancer.sh - билдит образ и пушит в Container Registry и создает ревизию (в nginx balancer не получилось запихнуть ENV)
-   ./deploy.sh - поочередно запускает ./init.sh -> ./backend.sh -> ./frontend.sh -> ./nginx-balancer.sh
+-   перед запуском скриптов нужно выполнить `yc init` или ./init.sh
+-   ./backend.sh - билдит образ и пушит в Container Registry - Ревизиии для контейнеров backend-1 backend-2 нужно делать самостоятельно через Консоль управления (CLI не позволяет работать с переменными окружения и секретами)
+-   ./frontend.sh - аналогично билдит образ и пушит в Container Registry
+-   ./nginx-balancer.sh - билдит образ и пушит в Container Registry и создает ревизию (в nginx balancer не получилось запихнуть ENV)
+-   ./deploy.sh - поочередно запускает ./init.sh -> ./backend.sh -> ./frontend.sh -> ./nginx-balancer.sh
