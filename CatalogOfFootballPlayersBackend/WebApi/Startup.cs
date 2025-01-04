@@ -1,4 +1,5 @@
 using Application;
+using Microsoft.OpenApi.Models;
 using Persistence;
 using WebApi.Hubs;
 
