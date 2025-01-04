@@ -186,7 +186,7 @@ const EditPlayer: React.FC = () => {
             </select>
 
             <button type="submit" disabled={isLoading}>
-                {isLoading ? 'Adding...' : 'Add Player'}
+                {isLoading ? 'Adding...' : 'Изменить'}
             </button>
             {error && <p className="error-message">{error}</p>}
         </form>

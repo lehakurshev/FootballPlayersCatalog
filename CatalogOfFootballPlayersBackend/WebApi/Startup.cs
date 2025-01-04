@@ -21,7 +21,8 @@ public class Startup
         
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowSpecificOrigin", builder => builder.WithOrigins("http://localhost:3000")
+            options.AddPolicy("AllowSpecificOrigin", builder => 
+                builder.WithOrigins(EnvironmentaVariables.FRONTEND_HOST ?? "http://localhost:8080", "http://localhost:3000")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
@@ -30,7 +31,12 @@ public class Startup
         services.AddSignalR();
         
 
-        services.AddSwaggerGen();
+
+        services.AddSwaggerGen(c =>
+        {
+            var apiVersion = EnvironmentaVariables.API_VERSION ?? "v1";
+            c.SwaggerDoc("-", new OpenApiInfo { Title = "My API", Version = apiVersion });
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
