@@ -73,20 +73,18 @@ const PlayerListPage: React.FC = () => {
                     return acc;
                 }, {});
                 setPlayerDictionary(playerDict);
-                success = true; // Успешная загрузка данных
+                success = true;
             } catch (err) {
-                attempts += 1; // Увеличиваем количество попыток
+                attempts += 1;
                 if (attempts >= maxAttempts) {
                   window.location.reload();
                 }
             }
         }
-
-        setLoading(false); // Устанавливаем состояние загрузки в false вне цикла
+        setLoading(false);
     };
 
     fetchPlayers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
 
 

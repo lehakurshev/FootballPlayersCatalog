@@ -68,9 +68,9 @@ const AddPlayer: React.FC = () => {
         };
         addPlayer(playerToAdd);
         navigate('/players', { replace: true });
-        success = true; // Успешное добавление игрока
+        success = true; 
       } catch (error: any) {
-        attempts += 1; // Увеличиваем количество попыток
+        attempts += 1;
         if (attempts >= maxAttempts) {
           //setError(error.message || 'Failed to add player after multiple attempts.');
           navigate('/players');

@@ -107,12 +107,11 @@ const EditPlayer: React.FC = () => {
                     country
                 };
                 updatePlayer(playerToAdd);
-                success = true; // Успешное обновление игрока
+                success = true;
                 navigate('/players', { replace: true });
             } catch (err: any) {
-                attempts += 1; // Увеличиваем количество попыток
+                attempts += 1;
                 if (attempts >= maxAttempts) {
-                    //setError(err.message || 'Failed to update player after multiple attempts.');
                     navigate('/players');
                     window.location.reload();
                 }
