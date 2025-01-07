@@ -22,54 +22,73 @@ const PlayerListPage: React.FC = () => {
   useEffect(() => {
     const createHubConnection = async () => {
       connection.on('AddPlayer', (player) => {
-         setPlayers((prevPlayers) => [...prevPlayers, player]);
-         setPlayerDictionary((prevDict) => ({ ...prevDict, [player.id]: player }));
-      });
-     connection.on('UpdatePlayer', (updatedPlayer) => {
-           setPlayers((prevPlayers) => {
-              const filteredPlayers = prevPlayers.filter((player) => player.id !== updatedPlayer.id);
-              return [...filteredPlayers, updatedPlayer];
-            });
-            setPlayerDictionary((prevDict) => ({
-              ...prevDict,
-              [updatedPlayer.id]: updatedPlayer,
-            }));
+        setPlayers((prevPlayers) => {
+          if (prevPlayers.find((p) => p.id === player.id)) {
+            return prevPlayers; // Если игрок уже есть, не добавляем
+          }
+          return [...prevPlayers, player];
         });
+        setPlayerDictionary((prevDict) => ({ ...prevDict, [player.id]: player }));
+      });
 
-       connection.on('DeletePlayer', (playerId) => {
-          setPlayers((prevPlayers) => prevPlayers.filter((p) => p.id !== playerId));
-          setPlayerDictionary((prevDict) => {
-             const updatedPlayerDict = {...prevDict};
-              delete updatedPlayerDict[playerId];
-              return updatedPlayerDict;
-          });
-       });
-     };
+      connection.on('UpdatePlayer', (updatedPlayer) => {
+        setPlayers((prevPlayers) => {
+          return prevPlayers.map((player) =>
+            player.id === updatedPlayer.id ? updatedPlayer : player
+          );
+        });
+        setPlayerDictionary((prevDict) => ({
+          ...prevDict,
+          [updatedPlayer.id]: updatedPlayer,
+        }));
+      });
+
+      connection.on('DeletePlayer', (playerId) => {
+        setPlayers((prevPlayers) => prevPlayers.filter((p) => p.id !== playerId));
+        setPlayerDictionary((prevDict) => {
+          const updatedPlayerDict = { ...prevDict };
+          delete updatedPlayerDict[playerId];
+          return updatedPlayerDict;
+        });
+      });
+    };
     createHubConnection();
   }, [connection]);
 
 
+
   useEffect(() => {
     const fetchPlayers = async () => {
-      try {
-        const response = await apiClient.footballPlayerAll();
-        setPlayers(response);
+        let attempts = 0;
+        const maxAttempts = 100;
+        let success = false;
 
-        const playerDict = response.reduce((acc: { [key: string]: FootballPlayer }, player) => {
-          acc[player.id as string] = player;
-          return acc;
-        }, {});
-        setPlayerDictionary(playerDict);
-      } catch (err) {
-        setError('Не удалось загрузить список игроков');
-      } finally {
-        setLoading(false);
-      }
+        while (attempts < maxAttempts && !success) {
+            try {
+                const response = await apiClient.footballPlayerAll();
+                setPlayers(response);
+
+                const playerDict = response.reduce((acc: { [key: string]: FootballPlayer }, player) => {
+                    acc[player.id as string] = player;
+                    return acc;
+                }, {});
+                setPlayerDictionary(playerDict);
+                success = true; // Успешная загрузка данных
+            } catch (err) {
+                attempts += 1; // Увеличиваем количество попыток
+                if (attempts >= maxAttempts) {
+                  window.location.reload();
+                }
+            }
+        }
+
+        setLoading(false); // Устанавливаем состояние загрузки в false вне цикла
     };
 
     fetchPlayers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+}, []);
+
 
   if (loading) {
     return <p>Загрузка...</p>;
@@ -87,7 +106,7 @@ const PlayerListPage: React.FC = () => {
 
   const handleDeletePlayer = async (playerId: string | undefined) => {
     if (playerId) {
-        setDeletingPlayerId(playerId);
+      setDeletingPlayerId(playerId);
       let attempts = 0;
       const maxAttempts = 100;
       let success = false;
@@ -96,24 +115,24 @@ const PlayerListPage: React.FC = () => {
         attempts++;
         try {
           await apiClient.footballPlayerDELETE(playerId);
-             const updatedPlayers = await apiClient.footballPlayerAll();
-             setPlayers(updatedPlayers);
+          const updatedPlayers = await apiClient.footballPlayerAll();
+          setPlayers(updatedPlayers);
 
-             const playerDict = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
-               acc[player.id as string] = player;
-              return acc;
-            }, {});
-            setPlayerDictionary(playerDict);
-            await deletePlayer(playerId);
+          const playerDict = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
+            acc[player.id as string] = player;
+            return acc;
+          }, {});
+          setPlayerDictionary(playerDict);
+          await deletePlayer(playerId);
           success = true;
         } catch (err) {
           console.error(`Error deleting player (attempt ${attempts}):`, err);
           await new Promise(resolve => setTimeout(resolve, 100));
         }
       }
-       setDeletingPlayerId(null);
+      setDeletingPlayerId(null);
       if (!success) {
-        setError('Не удалось удалить игрока после нескольких попыток');
+        window.location.reload();
       }
     }
   };
@@ -136,18 +155,18 @@ const PlayerListPage: React.FC = () => {
                 <p>Страна: {player.country}</p>
                 <p>Дата рождения: {player.dateOfBirth?.toString()}</p>
                 <p>Пол: {player.paul}</p>
-                  <p>Дата создания: {player.creationDate?.toString()}</p>
-                  <p>Дата редактирования: {player.editDate?.toString()}</p>
+                <p>Дата создания: {player.creationDate?.toString()}</p>
+                <p>Дата редактирования: {player.editDate?.toString()}</p>
               </div>
               <div>
                 <button onClick={() => handleEditPlayer(player.id)}>Редактировать</button>
-                  <button
+                <button
                   onClick={() => handleDeletePlayer(player.id)}
                   disabled={deletingPlayerId === player.id}
-                  >
-                    {deletingPlayerId === player.id ? "Удаление..." : "Удалить"}
-                  </button>
-                </div>
+                >
+                  {deletingPlayerId === player.id ? "Удаление..." : "Удалить"}
+                </button>
+              </div>
             </li>
           ))}
         </ul>

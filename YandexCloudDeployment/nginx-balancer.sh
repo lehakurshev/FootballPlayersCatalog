@@ -5,7 +5,7 @@ docker push cr.yandex/crpkbb5djavf03s565sl/nginx-balancer:latest
 yc serverless container revision deploy \
   --container-name nginx-balancer \
   --image cr.yandex/crpkbb5djavf03s565sl/nginx-balancer:latest \
-  --service-account-id ajeq0stspndu7grcu5m0 \
+  --service-account-id aje0u1qlfdbi94rjvf9f \
   --cores 1 \
   --memory 1GB \
   --concurrency 1 \

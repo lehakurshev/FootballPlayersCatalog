@@ -10,11 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f034dd98-c185-4f48-866a-33cef45a8559" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/AddPlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/AddPlayer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/components/UpdatePlayer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/pages/PlayerListPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../catalog-of-football-players-frontend/src/pages/PlayerListPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nginx-balancer/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../nginx-balancer/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../nginx-balancer/nginx.conf.template" beforeDir="false" afterPath="$PROJECT_DIR$/../nginx-balancer/nginx.conf.template" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../postgres/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../postgres/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +50,7 @@
     &quot;.NET Launch Settings Profile.WebApplication1: IIS Express.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;44705050&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -134,6 +130,8 @@
       <workItem from="1735140863041" duration="5607000" />
       <workItem from="1735209489259" duration="3028000" />
       <workItem from="1735456987156" duration="3592000" />
+      <workItem from="1736086164078" duration="2733000" />
+      <workItem from="1736099847066" duration="3640000" />
     </task>
     <servers />
   </component>

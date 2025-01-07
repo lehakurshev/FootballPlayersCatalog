@@ -66,13 +66,14 @@ const EditPlayer: React.FC = () => {
         setGenderError(!paul);
         setDateOfBirthError(!dateOfBirth);
         setTeamNameError(!teamName);
-
+    
         if (!firstName || !lastName || !paul || !dateOfBirth || !teamName) {
             return;
         }
+    
         setIsLoading(true);
         setError(null);
-
+    
         const player: UpdateFootballPlayerDto = {
             id: id as string,
             firstName,
@@ -82,16 +83,21 @@ const EditPlayer: React.FC = () => {
             teamName,
             country
         };
-
-        try {
-            await apiClient.footballPlayerPUT(player);
-            const updatedPlayers = await apiClient.footballPlayerAll();
-            const newPlayerDictionary = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
-                acc[player.id as string] = player;
-                return acc;
-            }, {});
-            setPlayerDictionary(newPlayerDictionary);
-            const playerToAdd: FootballPlayer = {
+    
+        let attempts = 0;
+        const maxAttempts = 100;
+        let success = false;
+    
+        while (attempts < maxAttempts && !success) {
+            try {
+                await apiClient.footballPlayerPUT(player);
+                const updatedPlayers = await apiClient.footballPlayerAll();
+                const newPlayerDictionary = updatedPlayers.reduce((acc: { [key: string]: FootballPlayer }, player) => {
+                    acc[player.id as string] = player;
+                    return acc;
+                }, {});
+                setPlayerDictionary(newPlayerDictionary);
+                const playerToAdd: FootballPlayer = {
                     id,
                     firstName,
                     lastName,
@@ -99,15 +105,23 @@ const EditPlayer: React.FC = () => {
                     dateOfBirth: new Date(dateOfBirth),
                     teamName,
                     country
-                    };
-                    updatePlayer(playerToAdd);
-            navigate('/players', { replace: true });
-        } catch (err: any) {
-            setError(err.message || 'An error occurred while updating the player.');
-        } finally {
-            setIsLoading(false);
+                };
+                updatePlayer(playerToAdd);
+                success = true; // Успешное обновление игрока
+                navigate('/players', { replace: true });
+            } catch (err: any) {
+                attempts += 1; // Увеличиваем количество попыток
+                if (attempts >= maxAttempts) {
+                    //setError(err.message || 'Failed to update player after multiple attempts.');
+                    navigate('/players');
+                    window.location.reload();
+                }
+            }
         }
+    
+        setIsLoading(false);
     };
+    
 
     if (isLoading) {
         return <p>Updating player...</p>;

@@ -49,24 +49,37 @@ const AddPlayer: React.FC = () => {
       teamName,
       country
     };
-    try {
-      const id = await apiClient.footballPlayerPOST(player);
-      const playerToAdd: FootballPlayer = {
-        id,
-        firstName,
-        lastName,
-        paul: gender,
-        dateOfBirth: new Date(dateOfBirth),
-        teamName,
-        country
+
+    let attempts = 0;
+    const maxAttempts = 100;
+    let success = false;
+
+    while (attempts < maxAttempts && !success) {
+      try {
+        const id = await apiClient.footballPlayerPOST(player);
+        const playerToAdd: FootballPlayer = {
+          id,
+          firstName,
+          lastName,
+          paul: gender,
+          dateOfBirth: new Date(dateOfBirth),
+          teamName,
+          country
         };
-      addPlayer(playerToAdd);
-      navigate('/players', { replace: true });
-    } catch (error: any) {
-      setError(error.message || 'Failed to add player.');
-    } finally {
-      setIsLoading(false);
+        addPlayer(playerToAdd);
+        navigate('/players', { replace: true });
+        success = true; // Успешное добавление игрока
+      } catch (error: any) {
+        attempts += 1; // Увеличиваем количество попыток
+        if (attempts >= maxAttempts) {
+          //setError(error.message || 'Failed to add player after multiple attempts.');
+          navigate('/players');
+          window.location.reload();
+        }
+      }
     }
+
+    setIsLoading(false);
   };
 
   return (
