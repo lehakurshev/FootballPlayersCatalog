@@ -94,3 +94,6 @@
 
 ### 1. ELK = Elasticsearch (СУБД + движок) + Logstash (средство для сборка логов) + Kibana (средство визуализации)
 ### 2. Grafana и Prometheus ✅
+### 3. nginx-balancer-with-WebSocket ✅
+
+### запускать все это добро можно в - YandexCloudCompose/docker-compose.yml
