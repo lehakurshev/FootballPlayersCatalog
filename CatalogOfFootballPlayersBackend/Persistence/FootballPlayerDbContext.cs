@@ -18,7 +18,7 @@ public sealed class FootballPlayerDbContext : DbContext, IFootballPlayerDbContex
 
         //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=footballplayersdb;Username=postgres;Password=postgres");
         
-        var host       = Environment.GetEnvironmentVariable("DB_HOST") ?? "postgres";
+        var host       = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
         var port       = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
         var db         = Environment.GetEnvironmentVariable("DB_NAME") ?? "footballplayersdb";
         var username         = Environment.GetEnvironmentVariable("DB_USER_NAME") ?? "postgres";

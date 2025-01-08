@@ -29,7 +29,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=footballplayersdb
-      - FRONTEND_HOST=http://localhost:3000
+      - FRONTEND_HOST=http://localhost:7000
       - PORT=5001
     networks:
       - backend
@@ -50,7 +50,7 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
       - DB_NAME=footballplayersdb
-      - FRONTEND_HOST=http://localhost:3000
+      - FRONTEND_HOST=http://localhost:7000
       - PORT=5002
     networks:
       - backend
@@ -59,13 +59,14 @@ services:
 
   nginx-balancer:
     build: 
-      context: ../nginx-balancer
+      context: ../nginx-balancer-with-WebSocket
       args:
         PORT1: localhost:5001
         PORT2: localhost:5002
         HOST1: host.docker.internal:5001
         HOST2: host.docker.internal:5002
         BALANCE_PORT: 8080
+        TARNSPORT: http
     ports:
       - "8080:8080"
     networks:
@@ -75,18 +76,32 @@ services:
       - dotnet-app-2
 
   tsx-app:
-    build:
+    build: 
       context: ../catalog-of-football-players-frontend
       args:
         REACT_APP_BACK_ADDRESS: http://localhost:8080
+        REACT_APP_USE_SIGNALR: true
+        PORT: 7000
     ports:
-      - "3000:3000"
+      - "7000:7000"
     environment:
-      - PORT=3000
+      - PORT=7000
     networks:
       - backend
     depends_on:
       - nginx-balancer
+
+  prometheus:
+    build: 
+      context: ../Prometheus
+    ports:
+      - "9090:9090"
+
+  grafana:
+    build: 
+      context: ../Grafana
+    ports:
+      - "3000:3000"
 
 volumes:
   postgres:
