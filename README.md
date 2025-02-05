@@ -96,4 +96,4 @@
 ### 2. Grafana и Prometheus ✅
 ### 3. nginx-balancer-with-WebSocket ✅
 
-### запускать все это добро можно в - YandexCloudCompose/docker-compose.yml
+### запускать все это добро можно в - YandexCloudCompose/docker-compose.yml `docker-compose up --build`
