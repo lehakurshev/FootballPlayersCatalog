@@ -9,7 +9,16 @@ public class FootballPlayer
     
     public string? Paul { get; set; }
     public DateTime? DateOfBirth { get; set; }
+    
+    public Guid TeamId  { get; set; }
+    
+    
+    /// <summary>
+    /// надо будет избавиться
+    /// </summary>
     public string? TeamName { get; set; }
+    
+    
     public string? Country { get; set; }
     public DateTime CreationDate { get; set; }
     public DateTime? EditDate { get; set; }

@@ -5,11 +5,12 @@ using Persistence.EntityTypeConfiguration;
 
 namespace Persistence;
 
-public sealed class FootballPlayerDbContext : DbContext, IFootballPlayerDbContext
+public sealed class CatalogOfFootballPlayersDbContext : DbContext, ICatalogOfFootballPlayersDbContext
 {
     public DbSet<FootballPlayer> FootballPlayers { get; set; }
+    public DbSet<Team> Teams { get; set; }
     
-    public FootballPlayerDbContext(DbContextOptions<FootballPlayerDbContext> options) : base(options)
+    public CatalogOfFootballPlayersDbContext(DbContextOptions<CatalogOfFootballPlayersDbContext> options) : base(options)
     {
         
     }
@@ -18,7 +19,7 @@ public sealed class FootballPlayerDbContext : DbContext, IFootballPlayerDbContex
 
         //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=footballplayersdb;Username=postgres;Password=postgres");
         
-        var host       = Environment.GetEnvironmentVariable("DB_HOST") ?? "postgres";
+        var host       = Environment.GetEnvironmentVariable("DB_HOST") ?? "localhost";
         var port       = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
         var db         = Environment.GetEnvironmentVariable("DB_NAME") ?? "footballplayersdb";
         var username         = Environment.GetEnvironmentVariable("DB_USER_NAME") ?? "postgres";
@@ -31,6 +32,7 @@ public sealed class FootballPlayerDbContext : DbContext, IFootballPlayerDbContex
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new FootballPlayerConfiguration());
+        modelBuilder.ApplyConfiguration(new TeamConfiguration());
         base.OnModelCreating(modelBuilder);
     }
 }

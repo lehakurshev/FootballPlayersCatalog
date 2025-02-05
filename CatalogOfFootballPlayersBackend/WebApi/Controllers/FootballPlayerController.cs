@@ -36,7 +36,7 @@ public class FootballPlayerController : BaseController
     [HttpPost]
     public async Task<ActionResult<Guid>> Add([FromBody] AddFootballPlayerDto player)
     {
-        var command = new AddFootballPlayerCommand
+        var addFootballPlayerCommand = new AddFootballPlayerCommand
         {
             FirstName = player.FirstName,
             LastName = player.LastName,
@@ -45,8 +45,9 @@ public class FootballPlayerController : BaseController
             DateOfBirth = player.DateOfBirth,
             Paul = player.Paul
         };
-        var noteId = await Mediator.Send(command);
-        return Ok(noteId);
+        
+        var playerId = await Mediator.Send(addFootballPlayerCommand);
+        return Ok(playerId);
     }
     
     [HttpPut]

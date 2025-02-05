@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f034dd98-c185-4f48-866a-33cef45a8559" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../postgres/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../postgres/Dockerfile" afterDir="false" />
-    </list>
+    <list default="true" id="f034dd98-c185-4f48-866a-33cef45a8559" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +27,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1e8feaadf5c3fa14d36ea2a638c432a2e1a47b7837d8b83d88303c5d9c15cf/AsyncValueTaskMethodBuilderT.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/294078ecfce6fdb942ecfee089f09717de7a6fcfe5efd9fdb6f4f93c0fb4813/ActionMethodExecutor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3751f63369d883c5ea470ed57be8df2515b62dde23c49b86e1bbaf8c27b/CallSiteRuntimeResolver.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3bd4df5aff92cabbc4d630be64227073db1b8539b3a1e47786b4b189d7cdb7/DbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/879e3173b4f82be9a07b4366bcbf46161cc43f2bd9e494df2d923810e3c48/ControllerActionInvoker.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8aca45508683a6169bab9e8bd96b7cda607d638cacfaa31173c8c278c45/ISender.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e2e3f232b3f74cfc56d24ec307aaea234eb831ec23796f1b454eb7e8fe1/CallSiteVisitor.cs" root0="FORCE_HIGHLIGHTING" />
@@ -45,20 +44,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.WebApplication1: IIS Express.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.WebApplication1: IIS Express.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.WebApplication1: IIS Express">
     <configuration name="WebApplication1: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebApi/WebApi.csproj" />
@@ -132,6 +131,9 @@
       <workItem from="1735456987156" duration="3592000" />
       <workItem from="1736086164078" duration="2733000" />
       <workItem from="1736099847066" duration="3640000" />
+      <workItem from="1738750814315" duration="4346000" />
+      <workItem from="1738757758146" duration="8019000" />
+      <workItem from="1738769714633" duration="4260000" />
     </task>
     <servers />
   </component>
@@ -159,6 +161,58 @@
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Application/FootballPlayers/Commands/AddFootballPlayer/AddFootballPlayerCommandHandler.cs</url>
+          <line>22</line>
+          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\FootballPlayers\Commands\AddFootballPlayer\AddFootballPlayerCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="714" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1213" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Application/FootballPlayers/Commands/AddFootballPlayer/AddFootballPlayerCommandHandler.cs</url>
+          <line>36</line>
+          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\FootballPlayers\Commands\AddFootballPlayer\AddFootballPlayerCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="1231" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1308" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Application/Teams/Queries/GetTeamsListQueryHandler.cs</url>
+          <line>16</line>
+          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\Teams\Queries\GetTeamsListQueryHandler.cs" containingFunctionPresentation="Method 'Handle'">
+            <startOffsets>
+              <option value="588" />
+            </startOffsets>
+            <endOffsets>
+              <option value="589" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/WebApi/Controllers/TeamController.cs</url>
+          <line>12</line>
+          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\WebApi\Controllers\TeamController.cs" containingFunctionPresentation="Method 'GetTeams'">
+            <startOffsets>
+              <option value="330" />
+            </startOffsets>
+            <endOffsets>
+              <option value="331" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/WebApi/Controllers/FootballPlayerController.cs</url>
           <line>18</line>
           <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\WebApi\Controllers\FootballPlayerController.cs" containingFunctionPresentation="Method 'GetAll'">
@@ -169,59 +223,20 @@
               <option value="650" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="2" />
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Application/FootballPlayers/Queries/GetFootballPlayersList/GetFootballPlayersListQueryHandler.cs</url>
-          <line>17</line>
-          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\FootballPlayers\Queries\GetFootballPlayersList\GetFootballPlayersListQueryHandler.cs" containingFunctionPresentation="Method 'Handle'">
-            <startOffsets>
-              <option value="618" />
-            </startOffsets>
-            <endOffsets>
-              <option value="722" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Application/FootballPlayers/Queries/GetFootballPlayersList/GetFootballPlayersListQueryHandler.cs</url>
-          <line>20</line>
-          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\FootballPlayers\Queries\GetFootballPlayersList\GetFootballPlayersListQueryHandler.cs" containingFunctionPresentation="Method 'Handle'">
-            <startOffsets>
-              <option value="740" />
-            </startOffsets>
-            <endOffsets>
-              <option value="768" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Application/FootballPlayers/Commands/AddFootballPlayer/AddFootballPlayerCommandHandler.cs</url>
           <line>16</line>
-          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\FootballPlayers\Commands\AddFootballPlayer\AddFootballPlayerCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
+          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\FootballPlayers\Queries\GetFootballPlayersList\GetFootballPlayersListQueryHandler.cs" containingFunctionPresentation="Method 'Handle'">
             <startOffsets>
-              <option value="555" />
+              <option value="628" />
             </startOffsets>
             <endOffsets>
-              <option value="1017" />
+              <option value="629" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Application/FootballPlayers/Commands/AddFootballPlayer/AddFootballPlayerCommandHandler.cs</url>
-          <line>29</line>
-          <properties documentPath="C:\Users\lehak\FootballPlayersCatalog\CatalogOfFootballPlayersBackend\Application\FootballPlayers\Commands\AddFootballPlayer\AddFootballPlayerCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
-            <startOffsets>
-              <option value="1035" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1112" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="13" />
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

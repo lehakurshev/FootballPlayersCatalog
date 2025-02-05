@@ -8,15 +8,14 @@ namespace Application.FootballPlayers.Queries.GetFootballPlayersList;
 public class GetFootballPlayersListQueryHandler : 
     IRequestHandler<GetFootballPlayersListQuery, IList<FootballPlayer>>
 {
-    private readonly IFootballPlayerDbContext _dbContext;
+    private readonly ICatalogOfFootballPlayersDbContext _dbContext;
     
-    public GetFootballPlayersListQueryHandler(IFootballPlayerDbContext dbContext) =>
+    public GetFootballPlayersListQueryHandler(ICatalogOfFootballPlayersDbContext dbContext) =>
         _dbContext = dbContext;
     
     public async Task<IList<FootballPlayer>> Handle(GetFootballPlayersListQuery request, CancellationToken cancellationToken)
     {
-        var footballPlayresQuery = await _dbContext.FootballPlayers
-            .ToListAsync(cancellationToken);
+        var footballPlayresQuery = await _dbContext.FootballPlayers.ToListAsync(cancellationToken);
         
         return footballPlayresQuery;
     }

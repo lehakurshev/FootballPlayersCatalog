@@ -1,5 +1,6 @@
 using Application.Common.Exceptions;
 using Application.Interfaces;
+using Application.Teams.Comands;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +9,21 @@ namespace Application.FootballPlayers.Commands.UpdateFootballPlayer;
 
 public class UpdateFootballPlayerCommandHandler : IRequestHandler<UpdateFootballPlayerCommand>
 {
-    private readonly IFootballPlayerDbContext _dbContext;
-
-    public UpdateFootballPlayerCommandHandler(IFootballPlayerDbContext dbContext) =>
-        _dbContext = dbContext;
+    private readonly ICatalogOfFootballPlayersDbContext _dbContext;
     
+    private readonly IMediator _mediator;
+
+    public UpdateFootballPlayerCommandHandler(ICatalogOfFootballPlayersDbContext dbContext, IMediator mediator)
+    {
+        _dbContext = dbContext;
+        _mediator = mediator;
+    }
+
     public async Task Handle(UpdateFootballPlayerCommand request, CancellationToken cancellationToken)
     {
         var entity =
-            await _dbContext.FootballPlayers.FirstOrDefaultAsync(note =>
-                note.Id == request.Id, cancellationToken);
+            await _dbContext.FootballPlayers.FirstOrDefaultAsync(player =>
+                player.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {
@@ -33,5 +39,7 @@ public class UpdateFootballPlayerCommandHandler : IRequestHandler<UpdateFootball
         entity.DateOfBirth = request.DateOfBirth;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
+        
+        await _mediator.Send(new TryDeieteTeamCommand{TeamId = entity.TeamId}, cancellationToken);
     }
 }

@@ -9,10 +9,10 @@ public class FootballPlayerConfiguration : IEntityTypeConfiguration<FootballPlay
     public void Configure(EntityTypeBuilder<FootballPlayer> builder)
     {
         builder.HasKey(footballPlayer => footballPlayer.Id);
-        builder.HasIndex(note => note.Id).IsUnique();
-        builder.Property(note => note.FirstName).HasMaxLength(100);
-        builder.Property(note => note.LastName).HasMaxLength(100);
-        builder.Property(note => note.Country).HasMaxLength(100);
-        builder.Property(note => note.TeamName).HasMaxLength(100);
+        builder.HasIndex(footballPlayer => footballPlayer.Id).IsUnique();
+        builder.Property(footballPlayer => footballPlayer.FirstName).HasMaxLength(100);
+        builder.Property(footballPlayer => footballPlayer.LastName).HasMaxLength(100);
+        builder.Property(footballPlayer => footballPlayer.Country).HasMaxLength(100);
+        builder.Property(footballPlayer => footballPlayer.TeamName).HasMaxLength(100);
     }
 }

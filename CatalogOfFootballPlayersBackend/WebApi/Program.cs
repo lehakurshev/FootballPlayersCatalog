@@ -12,7 +12,7 @@ public class Program
             var serviceProvider = scope.ServiceProvider;
             try
             {
-                var context = serviceProvider.GetRequiredService<FootballPlayerDbContext>();
+                var context = serviceProvider.GetRequiredService<CatalogOfFootballPlayersDbContext>();
                 context.Database.EnsureCreated();
             }
             catch (Exception e)

@@ -11,10 +11,10 @@ public static class DependencyInjection
         services, IConfiguration configuration)
     {
         var connectionString = configuration["DbConnection"];
-        services.AddDbContext<FootballPlayerDbContext>(options => { options.UseNpgsql(connectionString); });
+        services.AddDbContext<CatalogOfFootballPlayersDbContext>(options => { options.UseNpgsql(connectionString); });
 
-        services.AddScoped<IFootballPlayerDbContext>(provider =>
-            provider.GetService<FootballPlayerDbContext>());
+        services.AddScoped<ICatalogOfFootballPlayersDbContext>(provider =>
+            provider.GetService<CatalogOfFootballPlayersDbContext>());
 
         return services;
     }

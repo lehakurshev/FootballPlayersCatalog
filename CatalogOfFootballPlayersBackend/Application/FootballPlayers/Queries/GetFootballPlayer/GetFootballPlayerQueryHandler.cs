@@ -9,16 +9,16 @@ namespace Application.FootballPlayers.Queries.GetFootballPlayer;
 public class GetFootballPlayerQueryHandler : 
     IRequestHandler<GetFootballPlayerQuery, FootballPlayer>
 {
-    private readonly IFootballPlayerDbContext _dbContext;
+    private readonly ICatalogOfFootballPlayersDbContext _dbContext;
     
-    public GetFootballPlayerQueryHandler(IFootballPlayerDbContext dbContext) =>
+    public GetFootballPlayerQueryHandler(ICatalogOfFootballPlayersDbContext dbContext) =>
         _dbContext = dbContext;
 
     public async Task<FootballPlayer> Handle(GetFootballPlayerQuery request, CancellationToken cancellationToken)
     {
         var entity = await _dbContext.FootballPlayers
-            .FirstOrDefaultAsync(note =>
-                note.Id == request.Id, cancellationToken);
+            .FirstOrDefaultAsync(player =>
+                player.Id == request.Id, cancellationToken);
 
         if (entity == null)
         {
