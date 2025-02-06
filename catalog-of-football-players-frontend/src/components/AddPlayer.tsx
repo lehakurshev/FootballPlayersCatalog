@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Client, AddFootballPlayerDto, FootballPlayer } from '../api/api';
+import React, { useState, useEffect } from 'react';
+import { Client, AddFootballPlayerDto, FootballPlayer, Team } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 import { addPlayer } from '../api/FootballPlayerHub';
 import { BACK_ADDRESS } from '../config';
@@ -13,7 +13,11 @@ const AddPlayer: React.FC = () => {
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
+  const [Teams, setTeams] = useState<Team[]>([]);
   const [teamName, setTeamName] = useState('');
+  const [newTeamName, setNewTeamName] = useState('');
+  const [isNewTeam, setIsNewTeam] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [country, setCountry] = useState(countries[0]);
@@ -25,6 +29,41 @@ const AddPlayer: React.FC = () => {
   const navigate = useNavigate();
 
   const apiClient = new Client(BACK_ADDRESS);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      let attempts = 0;
+      const maxAttempts = 100;
+      let success = false;
+
+      while (attempts < maxAttempts && !success) {
+        try {
+          const response = await apiClient.team();
+          setTeams(response);
+
+          success = true;
+        } catch (err) {
+          attempts += 1;
+          if (attempts >= maxAttempts) {
+            window.location.reload();
+          }
+        }
+      }
+    };
+
+    fetchTeams();
+  }, []);
+
+  const handleTeamChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setTeamName(e.target.value);
+    setIsNewTeam(e.target.value === 'new'); // If "New Team" is selected
+  };
+
+  const handleNewTeamNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTeamName(e.target.value);
+    setTeamName(e.target.value); // Keep the main teamName updated as the new team name is typed
+  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,7 +107,7 @@ const AddPlayer: React.FC = () => {
         };
         addPlayer(playerToAdd);
         navigate('/players', { replace: true });
-        success = true; 
+        success = true;
       } catch (error: any) {
         attempts += 1;
         if (attempts >= maxAttempts) {
@@ -129,16 +168,35 @@ const AddPlayer: React.FC = () => {
         onBlur={() => setDateOfBirthError(!dateOfBirth)}
         className={dateOfBirthError ? 'error' : ''}
       />
+
+
       {teamNameError && <span className="error-message">Поле обязательно для заполнения</span>}
-      <input
-        type="text"
-        placeholder="Название команды"
+      <select
         id="teamName"
         value={teamName}
-        onChange={(e) => setTeamName(e.target.value)}
+        onChange={handleTeamChange}
         onBlur={() => setTeamNameError(!teamName)}
         className={teamNameError ? 'error' : ''}
-      />
+      >
+        <option value="">Выберите команду</option>
+        {Teams.map((team) => (
+          <option key={team.id} value={team.name}>
+            {team.name}
+          </option>
+        ))}
+        <option value="new">Новая команда</option>
+      </select>
+
+      {isNewTeam && (
+        <input
+          type="text"
+          placeholder="Название новой команды"
+          value={newTeamName}
+          onChange={handleNewTeamNameChange}
+          className="new-team-input"
+        />
+      )}
+
       <select id="country" value={country} onChange={(e) => setCountry(e.target.value)}>
         {countries.map((country) => (
           <option key={country} value={country}>

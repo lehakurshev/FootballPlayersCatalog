@@ -35,7 +35,9 @@ export class Client extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
             return this.processFootballPlayerAll(_response);
         });
     }
@@ -76,7 +78,9 @@ export class Client extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
             return this.processFootballPlayerPOST(_response);
         });
     }
@@ -117,7 +121,9 @@ export class Client extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
             return this.processFootballPlayerPUT(_response);
         });
     }
@@ -156,7 +162,9 @@ export class Client extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
             return this.processFootballPlayerGET(_response);
         });
     }
@@ -194,7 +202,9 @@ export class Client extends ClientBase {
             }
         };
 
-        return this.http.fetch(url_, options_).then((_response: Response) => {
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
             return this.processFootballPlayerDELETE(_response);
         });
     }
@@ -213,6 +223,44 @@ export class Client extends ClientBase {
         }
         return Promise.resolve<void>(null as any);
     }
+
+    /**
+     * @return OK
+     */
+    team(): Promise<Team[]> {
+        let url_ = this.baseUrl + "/api/Team";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: RequestInit = {
+            method: "GET",
+            headers: {
+                "Accept": "text/plain"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.processTeam(_response);
+        });
+    }
+
+    protected processTeam(response: Response): Promise<Team[]> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as Team[];
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<Team[]>(null as any);
+    }
 }
 
 export interface AddFootballPlayerDto {
@@ -230,10 +278,16 @@ export interface FootballPlayer {
     lastName?: string | undefined;
     paul?: string | undefined;
     dateOfBirth?: Date | undefined;
+    teamId?: string;
     teamName?: string | undefined;
     country?: string | undefined;
     creationDate?: Date;
     editDate?: Date | undefined;
+}
+
+export interface Team {
+    id?: string;
+    name?: string | undefined;
 }
 
 export interface UpdateFootballPlayerDto {

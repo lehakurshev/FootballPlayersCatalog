@@ -59,33 +59,33 @@ const PlayerListPage: React.FC = () => {
 
   useEffect(() => {
     const fetchPlayers = async () => {
-        let attempts = 0;
-        const maxAttempts = 100;
-        let success = false;
+      let attempts = 0;
+      const maxAttempts = 100;
+      let success = false;
 
-        while (attempts < maxAttempts && !success) {
-            try {
-                const response = await apiClient.footballPlayerAll();
-                setPlayers(response);
+      while (attempts < maxAttempts && !success) {
+        try {
+          const response = await apiClient.footballPlayerAll();
+          setPlayers(response);
 
-                const playerDict = response.reduce((acc: { [key: string]: FootballPlayer }, player) => {
-                    acc[player.id as string] = player;
-                    return acc;
-                }, {});
-                setPlayerDictionary(playerDict);
-                success = true;
-            } catch (err) {
-                attempts += 1;
-                if (attempts >= maxAttempts) {
-                  window.location.reload();
-                }
-            }
+          const playerDict = response.reduce((acc: { [key: string]: FootballPlayer }, player) => {
+            acc[player.id as string] = player;
+            return acc;
+          }, {});
+          setPlayerDictionary(playerDict);
+          success = true;
+        } catch (err) {
+          attempts += 1;
+          if (attempts >= maxAttempts) {
+            window.location.reload();
+          }
         }
-        setLoading(false);
+      }
+      setLoading(false);
     };
 
     fetchPlayers();
-}, []);
+  }, []);
 
 
   if (loading) {

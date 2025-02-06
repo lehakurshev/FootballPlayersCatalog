@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from "react-router-dom";
-import { Client, UpdateFootballPlayerDto, FootballPlayer } from '../api/api';
+import { Client, UpdateFootballPlayerDto, FootballPlayer, Team } from '../api/api';
 import { usePlayerContext } from '../context/PlayerContext';
 import { useNavigate } from 'react-router-dom';
 import { BACK_ADDRESS } from '../config';
@@ -15,7 +15,10 @@ const EditPlayer: React.FC = () => {
     const [lastName, setLastName] = useState('');
     const [paul, setGender] = useState('');
     const [dateOfBirth, setDateOfBirth] = useState('');
+    const [Teams, setTeams] = useState<Team[]>([]);
     const [teamName, setTeamName] = useState('');
+    const [newTeamName, setNewTeamName] = useState('');
+    const [isNewTeam, setIsNewTeam] = useState(false);
     const [country, setCountry] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -58,6 +61,41 @@ const EditPlayer: React.FC = () => {
     }, [id, playerDictionary]);
 
 
+    useEffect(() => {
+        const fetchTeams = async () => {
+            let attempts = 0;
+            const maxAttempts = 100;
+            let success = false;
+
+            while (attempts < maxAttempts && !success) {
+                try {
+                    const response = await apiClient.team();
+                    setTeams(response);
+
+                    success = true;
+                } catch (err) {
+                    attempts += 1;
+                    if (attempts >= maxAttempts) {
+                        window.location.reload();
+                    }
+                }
+            }
+        };
+
+        fetchTeams();
+    }, []);
+
+    const handleTeamChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setTeamName(e.target.value);
+        setIsNewTeam(e.target.value === 'new'); // If "New Team" is selected
+    };
+
+    const handleNewTeamNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewTeamName(e.target.value);
+        setTeamName(e.target.value); // Keep the main teamName updated as the new team name is typed
+    };
+
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         // Validation
@@ -66,14 +104,14 @@ const EditPlayer: React.FC = () => {
         setGenderError(!paul);
         setDateOfBirthError(!dateOfBirth);
         setTeamNameError(!teamName);
-    
+
         if (!firstName || !lastName || !paul || !dateOfBirth || !teamName) {
             return;
         }
-    
+
         setIsLoading(true);
         setError(null);
-    
+
         const player: UpdateFootballPlayerDto = {
             id: id as string,
             firstName,
@@ -83,11 +121,11 @@ const EditPlayer: React.FC = () => {
             teamName,
             country
         };
-    
+
         let attempts = 0;
         const maxAttempts = 100;
         let success = false;
-    
+
         while (attempts < maxAttempts && !success) {
             try {
                 await apiClient.footballPlayerPUT(player);
@@ -117,10 +155,10 @@ const EditPlayer: React.FC = () => {
                 }
             }
         }
-    
+
         setIsLoading(false);
     };
-    
+
 
     if (isLoading) {
         return <p>Updating player...</p>;
@@ -177,16 +215,34 @@ const EditPlayer: React.FC = () => {
                 onBlur={() => setDateOfBirthError(!dateOfBirth)}
                 className={dateOfBirthError ? 'error' : ''}
             />
+
+
             {teamNameError && <span className="error-message">Поле обязательно для заполнения</span>}
-            <input
-                type="text"
-                placeholder="Название команды"
+            <select
                 id="teamName"
                 value={teamName}
-                onChange={(e) => setTeamName(e.target.value)}
+                onChange={handleTeamChange}
                 onBlur={() => setTeamNameError(!teamName)}
                 className={teamNameError ? 'error' : ''}
-            />
+            >
+                <option value="">Выберите команду</option>
+                {Teams.map((team) => (
+                    <option key={team.id} value={team.name}>
+                        {team.name}
+                    </option>
+                ))}
+                <option value="new">Новая команда</option>
+            </select>
+
+            {isNewTeam && (
+                <input
+                    type="text"
+                    placeholder="Название новой команды"
+                    value={newTeamName}
+                    onChange={handleNewTeamNameChange}
+                    className="new-team-input"
+                />
+            )}
 
 
 
