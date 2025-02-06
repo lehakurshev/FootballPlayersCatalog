@@ -41,13 +41,12 @@ public class Startup
             var apiVersion = EnvironmentaVariables.API_VERSION ?? "v1";
             c.SwaggerDoc("-", new OpenApiInfo { Title = "My API", Version = apiVersion });
             
-            
             // не знаю зачем, но пусть будет
-            c.AddSignalRSwaggerGen(_ =>
+            /*c.AddSignalRSwaggerGen(_ =>
             {
                 _.UseHubXmlCommentsSummaryAsTagDescription =  true;
                 _.UseHubXmlCommentsSummaryAsTag = true;
-            });
+            });*/
         });
     }
 
