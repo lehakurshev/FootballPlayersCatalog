@@ -10,6 +10,7 @@ public class TeamConfiguration  : IEntityTypeConfiguration<Team>
     {
         builder.HasKey(team => team.Id);
         builder.HasIndex(team => team.Id).IsUnique();
+        builder.HasIndex(team => team.Name).IsUnique();
         builder.Property(note => note.Name).HasMaxLength(100);
     }
 }

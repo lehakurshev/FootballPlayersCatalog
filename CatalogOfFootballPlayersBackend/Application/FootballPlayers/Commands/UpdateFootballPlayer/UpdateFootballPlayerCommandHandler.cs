@@ -24,6 +24,8 @@ public class UpdateFootballPlayerCommandHandler : IRequestHandler<UpdateFootball
         var entity =
             await _dbContext.FootballPlayers.FirstOrDefaultAsync(player =>
                 player.Id == request.Id, cancellationToken);
+        
+        var oldTeamId = entity.TeamId;
 
         if (entity == null)
         {
@@ -34,12 +36,16 @@ public class UpdateFootballPlayerCommandHandler : IRequestHandler<UpdateFootball
         entity.LastName = request.LastName;
         entity.Country = request.Country;
         entity.TeamName = request.TeamName;
+        entity.TeamId = await _mediator.Send(new SetTeamCommand{TeamName = request.TeamName}, cancellationToken);
         entity.Paul = request.Paul;
         entity.EditDate = DateTime.UtcNow;
         entity.DateOfBirth = request.DateOfBirth;
         
         await _dbContext.SaveChangesAsync(cancellationToken);
-        
-        await _mediator.Send(new TryDeieteTeamCommand{TeamId = entity.TeamId}, cancellationToken);
+
+        if (oldTeamId != entity.TeamId)
+        {
+            await _mediator.Send(new TryDeieteTeamCommand{TeamId = oldTeamId}, cancellationToken);
+        }
     }
 }

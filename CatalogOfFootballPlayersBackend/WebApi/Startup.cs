@@ -2,6 +2,7 @@ using Application;
 using Microsoft.OpenApi.Models;
 using Persistence;
 using WebApi.Hubs;
+using SignalRSwaggerGen;
 
 namespace WebApi;
 
@@ -33,11 +34,20 @@ public class Startup
         });
         services.AddSignalR();
         
+        
 
         services.AddSwaggerGen(c =>
         {
             var apiVersion = EnvironmentaVariables.API_VERSION ?? "v1";
             c.SwaggerDoc("-", new OpenApiInfo { Title = "My API", Version = apiVersion });
+            
+            
+            // не знаю зачем, но пусть будет
+            c.AddSignalRSwaggerGen(_ =>
+            {
+                _.UseHubXmlCommentsSummaryAsTagDescription =  true;
+                _.UseHubXmlCommentsSummaryAsTag = true;
+            });
         });
     }
 
@@ -64,6 +74,7 @@ public class Startup
         {
             endpoints.MapControllers();
             endpoints.MapHub<FootballPlayerHub>("/players");
+            endpoints.MapHub<TeamHub>("/teams");
         });
     }
 }

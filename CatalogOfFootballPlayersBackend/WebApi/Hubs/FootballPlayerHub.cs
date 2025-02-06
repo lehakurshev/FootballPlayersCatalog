@@ -1,9 +1,11 @@
 using Domain;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
+using SignalRSwaggerGen.Attributes;
 
 namespace WebApi.Hubs;
 
+[SignalRHub]
 public class FootballPlayerHub : Hub
 {
     public Task AddPlayer(FootballPlayer player)

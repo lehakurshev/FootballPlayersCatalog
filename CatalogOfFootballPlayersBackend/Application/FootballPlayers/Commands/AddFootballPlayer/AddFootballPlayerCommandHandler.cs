@@ -20,6 +20,9 @@ public class AddFootballPlayerCommandHandler : IRequestHandler<AddFootballPlayer
 
     public async Task<Guid> Handle(AddFootballPlayerCommand request, CancellationToken cancellationToken)
     {
+        
+        var teamId = await _mediator.Send(new SetTeamCommand { TeamName = request.TeamName }, cancellationToken);
+        
         var footballPlayer = new FootballPlayer
         {
             Id = Guid.NewGuid(),
@@ -29,15 +32,13 @@ public class AddFootballPlayerCommandHandler : IRequestHandler<AddFootballPlayer
             DateOfBirth = request.DateOfBirth,
             Paul = request.Paul,
             TeamName = request.TeamName,
-            TeamId = Guid.NewGuid(),
+            TeamId = teamId,
             CreationDate = DateTime.UtcNow,
             EditDate = null // Если это новый игрок, то EditDate может быть null
         };
         
         await _dbContext.FootballPlayers.AddAsync(footballPlayer, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);
-        
-        await _mediator.Send(new SetTeamCommand { TeamName = request.TeamName }, cancellationToken);
 
         return footballPlayer.Id;
     }

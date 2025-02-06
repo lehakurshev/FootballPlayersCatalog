@@ -20,22 +20,20 @@ public class SetTeamCommandHandler  : IRequestHandler<SetTeamCommand, Guid>
 
     public async Task<Guid> Handle(SetTeamCommand request, CancellationToken cancellationToken)
     {
-        var teamIsEmptyQuery = new TeamIsEmptyQuery
-        {
-            TeamId = request.TeamId
-        };
+        var teamId = await _dbContext.Teams
+            .Where(fp => fp.Name == request.TeamName)
+            .Select(fp => fp.Id)
+            .FirstOrDefaultAsync(cancellationToken);
         
-        var teamIsEmpty = await _mediator.Send(teamIsEmptyQuery, cancellationToken);
-        
-        if (teamIsEmpty != Guid.Empty)
+        if (teamId != Guid.Empty)
         {
-            return teamIsEmpty;
+            return teamId;
         }
         else
         {
             var team = new Team
             {
-                Id = request.TeamId == Guid.Empty ? Guid.NewGuid() : request.TeamId, // это надо будет поменять
+                Id = Guid.NewGuid(),
                 Name = request.TeamName,
             };
 

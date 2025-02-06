@@ -29,8 +29,11 @@ public class TryDeieteTeamCommandHandler : IRequestHandler<TryDeieteTeamCommand>
 
         if (teamIsEmpty == Guid.Empty)
         {
-            await _dbContext.Teams.FirstOrDefaultAsync(team =>
+            var entity = await _dbContext.Teams.FirstOrDefaultAsync(team =>
                 team.Id == request.TeamId, cancellationToken);
+            
+            _dbContext.Teams.Remove(entity);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }
