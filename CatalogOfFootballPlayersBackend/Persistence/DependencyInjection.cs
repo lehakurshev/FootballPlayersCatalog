@@ -1,4 +1,4 @@
-using Application.Interfaces;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +13,8 @@ public static class DependencyInjection
         var connectionString = configuration["DbConnection"];
         services.AddDbContext<CatalogOfFootballPlayersDbContext>(options => { options.UseNpgsql(connectionString); });
 
-        services.AddScoped<ICatalogOfFootballPlayersDbContext>(provider =>
-            provider.GetService<CatalogOfFootballPlayersDbContext>());
+        /*services.AddScoped<ICatalogOfFootballPlayersDbContext>(provider =>
+            provider.GetService<CatalogOfFootballPlayersDbContext>());*/
 
         return services;
     }

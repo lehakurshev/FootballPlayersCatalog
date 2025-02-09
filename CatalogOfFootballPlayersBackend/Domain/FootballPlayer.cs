@@ -12,10 +12,6 @@ public class FootballPlayer
     
     public Guid TeamId  { get; set; }
     
-    
-    /// <summary>
-    /// надо будет избавиться
-    /// </summary>
     public string? TeamName { get; set; }
     
     

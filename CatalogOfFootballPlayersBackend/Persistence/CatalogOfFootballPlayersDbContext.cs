@@ -1,11 +1,10 @@
-﻿using Application.Interfaces;
-using Domain;
+﻿using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityTypeConfiguration;
 
 namespace Persistence;
 
-public sealed class CatalogOfFootballPlayersDbContext : DbContext, ICatalogOfFootballPlayersDbContext
+public sealed class CatalogOfFootballPlayersDbContext : DbContext
 {
     public DbSet<FootballPlayer> FootballPlayers { get; set; }
     public DbSet<Team> Teams { get; set; }

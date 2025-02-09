@@ -1,4 +1,4 @@
-using Application.Interfaces;
+using Application.Repositories;
 using Application.Teams.Queries;
 using Domain;
 using MediatR;
@@ -8,22 +8,17 @@ namespace Application.Teams.Comands;
 
 public class SetTeamCommandHandler  : IRequestHandler<SetTeamCommand, Guid>
 {
-    private readonly ICatalogOfFootballPlayersDbContext _dbContext;
-    
-    private readonly IMediator _mediator;
+    private readonly ITeamRepository _teamRepository;
 
-    public SetTeamCommandHandler(ICatalogOfFootballPlayersDbContext dbContext, IMediator mediator)
+
+    public SetTeamCommandHandler(ITeamRepository teamRepository)
     {
-        _dbContext = dbContext;
-        _mediator = mediator;
+        _teamRepository = teamRepository;
     }
 
     public async Task<Guid> Handle(SetTeamCommand request, CancellationToken cancellationToken)
     {
-        var teamId = await _dbContext.Teams
-            .Where(fp => fp.Name == request.TeamName)
-            .Select(fp => fp.Id)
-            .FirstOrDefaultAsync(cancellationToken);
+        var teamId = await _teamRepository.GetTeamIdByNameAsync(request.TeamName, cancellationToken);
         
         if (teamId != Guid.Empty)
         {
@@ -37,8 +32,8 @@ public class SetTeamCommandHandler  : IRequestHandler<SetTeamCommand, Guid>
                 Name = request.TeamName,
             };
 
-            await _dbContext.Teams.AddAsync(team, cancellationToken);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await _teamRepository.AddTeamAsync(team, cancellationToken);
+            await _teamRepository.SaveChangesAsync(cancellationToken);
         
             return team.Id;
         }

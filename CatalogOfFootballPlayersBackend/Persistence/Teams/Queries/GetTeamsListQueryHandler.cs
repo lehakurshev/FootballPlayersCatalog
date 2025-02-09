@@ -1,5 +1,5 @@
 using Application.FootballPlayers.Queries.GetFootballPlayersList;
-using Application.Interfaces;
+using Application.Repositories;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,14 +8,14 @@ namespace Application.Teams.Queries;
 
 public class GetTeamsListQueryHandler : IRequestHandler<GetTeamsListQuery, IList<Team>>
 {
-    private readonly ICatalogOfFootballPlayersDbContext _dbContext;
+    private readonly ITeamRepository _teamRepository;
 
-    public GetTeamsListQueryHandler(ICatalogOfFootballPlayersDbContext dbContext) =>
-        _dbContext = dbContext;
+    public GetTeamsListQueryHandler(ITeamRepository teamRepository) =>
+        _teamRepository = teamRepository;
 
     public async Task<IList<Team>> Handle(GetTeamsListQuery request, CancellationToken cancellationToken)
     {
-        var teams = await _dbContext.Teams.ToListAsync(cancellationToken);
+        var teams = await _teamRepository.GetAllTeamsAsync(cancellationToken);
         return teams;
     }
 }

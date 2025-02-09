@@ -1,5 +1,5 @@
 using Application.Common.Exceptions;
-using Application.Interfaces;
+using Application.Repositories;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,22 +9,21 @@ namespace Application.FootballPlayers.Queries.GetFootballPlayer;
 public class GetFootballPlayerQueryHandler : 
     IRequestHandler<GetFootballPlayerQuery, FootballPlayer>
 {
-    private readonly ICatalogOfFootballPlayersDbContext _dbContext;
+    private readonly IFootballPlayerRepository _footballPlayerRepository;
     
-    public GetFootballPlayerQueryHandler(ICatalogOfFootballPlayersDbContext dbContext) =>
-        _dbContext = dbContext;
+    public GetFootballPlayerQueryHandler(IFootballPlayerRepository footballPlayerRepository) =>
+        _footballPlayerRepository = footballPlayerRepository;
 
     public async Task<FootballPlayer> Handle(GetFootballPlayerQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _dbContext.FootballPlayers
-            .FirstOrDefaultAsync(player =>
-                player.Id == request.Id, cancellationToken);
+        var footballPlayer =
+            await _footballPlayerRepository.GetFootballPlayerByIdAsync(request.Id, cancellationToken);
 
-        if (entity == null)
+        if (footballPlayer == null)
         {
             throw new NotFoundException();
         }
 
-        return entity;
+        return footballPlayer;
     }
 }

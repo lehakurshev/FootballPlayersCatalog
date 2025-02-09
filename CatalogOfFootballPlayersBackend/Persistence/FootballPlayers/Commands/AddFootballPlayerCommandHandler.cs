@@ -1,4 +1,4 @@
-using Application.Interfaces;
+using Application.Repositories;
 using Application.Teams.Comands;
 using Domain;
 using MediatR;
@@ -8,13 +8,13 @@ namespace Application.FootballPlayers.Commands.AddFootballPlayer;
 
 public class AddFootballPlayerCommandHandler : IRequestHandler<AddFootballPlayerCommand, Guid>
 {
-    private readonly ICatalogOfFootballPlayersDbContext _dbContext;
+    private readonly IFootballPlayerRepository _footballPlayerRepository;
     
     private readonly IMediator _mediator;
 
-    public AddFootballPlayerCommandHandler(ICatalogOfFootballPlayersDbContext dbContext, IMediator mediator)
+    public AddFootballPlayerCommandHandler(IFootballPlayerRepository footballPlayerRepository, IMediator mediator)
     {
-        _dbContext = dbContext;
+        _footballPlayerRepository = footballPlayerRepository;
         _mediator = mediator;
     }
 
@@ -37,8 +37,8 @@ public class AddFootballPlayerCommandHandler : IRequestHandler<AddFootballPlayer
             EditDate = null // Если это новый игрок, то EditDate может быть null
         };
         
-        await _dbContext.FootballPlayers.AddAsync(footballPlayer, cancellationToken);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        await _footballPlayerRepository.AddFootballPlayerAsync(footballPlayer, cancellationToken);
+        await _footballPlayerRepository.SaveChangesAsync(cancellationToken);
 
         return footballPlayer.Id;
     }
